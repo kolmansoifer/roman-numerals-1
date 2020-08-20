@@ -25,6 +25,8 @@ function numToRomanNum (num) {
   let result;
   let romanArrayIndex;
   let reLessThan5 = /[1-4]/;
+  let reLessThan10 = /[5-9]/;
+
   if (reLessThan5.test(num)){
     romanArrayIndex = 0;
     if (num === "1" || num === "2" || num === "3"){
@@ -32,9 +34,20 @@ function numToRomanNum (num) {
     } else {
     result = romanArray[romanArrayIndex].concat(romanArray[romanArrayIndex+1]);
     };
+  
+  } else if (reLessThan10.test(num)){
+    romanArrayIndex = 1;
+    if (num === "5") {
+      result =  romanArray[romanArrayIndex];
+    } else if (num === "6" || num === "7" || num === "8"){
+      // result ="V".concat("I".repeat(parseInt(num)-5));
+      result = romanArray[romanArrayIndex].concat(romanArray[romanArrayIndex-1].repeat(parseInt(num)-5));
+    } else {
+    // result = "IX"
+    result = romanArray[romanArrayIndex-1].concat(romanArray[romanArrayIndex+1]);
+  };
+
     
-  } else if (num ===5){
-    result =  "V";
   } else if (num === 10){
     result =  "X";
   } else if (num === 50){
@@ -76,3 +89,19 @@ expectedReturn = "IV";
 console.log("Test with 4 : " + (numToRomanNum("4") === expectedReturn)); // Expect true
 
 
+// Test 3
+// When a user enters 6-9 the function returns the correct roman numeral.
+expectedReturn = "V";
+console.log("Test with 5 : " + (numToRomanNum("5") === expectedReturn)); // Expect true
+
+expectedReturn = "VI";
+console.log("Test with 6 : " + (numToRomanNum("6") === expectedReturn)); // Expect true
+
+expectedReturn = "VII";
+console.log("Test with 7 : " + (numToRomanNum("7") === expectedReturn)); // Expect true
+
+expectedReturn = "VIII";
+console.log("Test with 8 : " + (numToRomanNum("8") === expectedReturn)); // Expect true
+
+expectedReturn = "IX";
+console.log("Test with 9 : " + (numToRomanNum("9") === expectedReturn)); // Expect true
